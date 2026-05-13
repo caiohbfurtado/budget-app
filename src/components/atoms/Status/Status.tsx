@@ -2,8 +2,10 @@ import { Text, View } from "react-native";
 
 import { styles } from "./styles";
 
+export type QuoteStatus = "sent" | "draft" | "approved" | "declined";
+
 type StatusProps = {
-  status: "sent" | "draft" | "approved" | "declined";
+  status: QuoteStatus;
 };
 
 export function Status({ status }: StatusProps) {

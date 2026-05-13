@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingHorizontal: 20,
-    paddingVertical: 24,
   },
   headerContent: {
     width: "100%",
@@ -13,5 +12,6 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     gap: 8,
+    paddingVertical: 24,
   },
 });

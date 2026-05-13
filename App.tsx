@@ -7,7 +7,7 @@ import { Lato_400Regular } from "@expo-google-fonts/lato/400Regular";
 import { Lato_700Bold } from "@expo-google-fonts/lato/700Bold";
 
 import InputIcon from "./src/assets/icons/calendar.svg";
-import { Input } from "./src/components/Input/Input";
+import { Input } from "./src/components/Input";
 import { theme } from "./src/styles/theme";
 
 export default function App() {

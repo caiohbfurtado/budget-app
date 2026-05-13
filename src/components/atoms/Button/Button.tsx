@@ -5,7 +5,7 @@ import { SvgProps } from "react-native-svg";
 import { styles } from "./styles";
 
 type ButtonProps = TouchableOpacityProps & {
-  title: string;
+  title?: string;
   icon?: React.ComponentType<SvgProps>;
   variant?: "primary" | "secondary" | "danger";
 };
@@ -42,7 +42,9 @@ export function Button({
     >
       {Icon && <Icon width={24} height={24} fill={iconVariantColor[variant]} />}
 
-      <Text style={[styles.text, textVariantStyles[variant]]}>{title}</Text>
+      {title && (
+        <Text style={[styles.text, textVariantStyles[variant]]}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 }

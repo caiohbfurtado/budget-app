@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -6,7 +6,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import FilterIcon from "../../assets/icons/filter.svg";
 import SearchIcon from "../../assets/icons/search.svg";
 import { Button, Input } from "../../components";
-import { QuoteStatus } from "../../components/atoms/Status/Status";
 import { MainHeader } from "../../components/molecules/MainHeader";
 import { QuoteCard } from "../../components/molecules/QuoteCard";
 import { Quote, quotes } from "../../seeds/quotes";
@@ -16,6 +15,10 @@ import { styles } from "./styles";
 export function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredQuotes, setFilteredQuotes] = useState<Quote[]>(quotes);
+
+  const quotesInDraft = useMemo(() => {
+    return quotes.filter((quote) => quote.status === "draft").length;
+  }, []);
 
   const handleSearch = useCallback(() => {
     const filtered = quotes.filter(
@@ -36,7 +39,7 @@ export function Home() {
         flex: 1,
       }}
     >
-      <MainHeader hasDraft={true} />
+      <MainHeader quotesInDraft={quotesInDraft} />
 
       <View style={styles.content}>
         <View style={styles.headerContent}>

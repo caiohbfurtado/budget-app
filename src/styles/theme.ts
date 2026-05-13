@@ -5,6 +5,7 @@ export const theme = {
       base: "rgb(106, 70, 235)",
     },
     base: {
+      white: "#FFFFFF",
       gray: {
         100: "#FAFAFA",
         200: "#F0F0F0",

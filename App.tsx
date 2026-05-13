@@ -6,7 +6,9 @@ import { useFonts } from "@expo-google-fonts/lato";
 import { Lato_400Regular } from "@expo-google-fonts/lato/400Regular";
 import { Lato_700Bold } from "@expo-google-fonts/lato/700Bold";
 
-import InputIcon from "./src/assets/icons/calendar.svg";
+import CalendarIcon from "./src/assets/icons/calendar.svg";
+import DirectionUpRightIcon from "./src/assets/icons/direction-up-right.svg";
+import { Button } from "./src/components/Button";
 import { Input } from "./src/components/Input";
 import { theme } from "./src/styles/theme";
 
@@ -26,7 +28,16 @@ export default function App() {
 
       <View style={styles.content}>
         <Text style={styles.title}>Input</Text>
-        <Input placeholder="Teste de Input" prefix="R$" icon={InputIcon} />
+        <Input placeholder="Teste de Input" prefix="R$" icon={CalendarIcon} />
+
+        <Text style={styles.title}>Button Primary</Text>
+        <Button title="Label" icon={DirectionUpRightIcon} />
+
+        <Text style={styles.title}>Button Secondary</Text>
+        <Button title="Label" variant="secondary" icon={DirectionUpRightIcon} />
+
+        <Text style={styles.title}>Button Danger</Text>
+        <Button title="Label" variant="danger" icon={DirectionUpRightIcon} />
       </View>
     </Pressable>
   );

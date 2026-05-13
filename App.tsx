@@ -4,7 +4,9 @@ import { useFonts } from "@expo-google-fonts/lato";
 import { Lato_400Regular } from "@expo-google-fonts/lato/400Regular";
 import { Lato_700Bold } from "@expo-google-fonts/lato/700Bold";
 
-import { Home } from "./src/app/Home";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import { Home } from "./src/screens/Home";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -16,5 +18,9 @@ export default function App() {
     return null;
   }
 
-  return <Home />;
+  return (
+    <SafeAreaProvider>
+      <Home />
+    </SafeAreaProvider>
+  );
 }

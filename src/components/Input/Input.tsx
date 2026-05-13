@@ -27,9 +27,9 @@ export function Input({ icon: Icon, prefix, isErrored, ...rest }: InputProps) {
     >
       {Icon && (
         <Icon
-          stroke={theme.colors.base.gray[600]}
-          {...(isErrored && { stroke: theme.colors.feedback.danger.base })}
-          {...(isFocused && { stroke: theme.colors.principal.base })}
+          fill={theme.colors.base.gray[600]}
+          {...(isErrored && { fill: theme.colors.feedback.danger.base })}
+          {...(isFocused && { fill: theme.colors.principal.base })}
           width={20}
           height={20}
         />

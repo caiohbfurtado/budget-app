@@ -10,6 +10,7 @@ import CalendarIcon from "./src/assets/icons/calendar.svg";
 import DirectionUpRightIcon from "./src/assets/icons/direction-up-right.svg";
 import { Button } from "./src/components/Button";
 import { Input } from "./src/components/Input";
+import { Status } from "./src/components/Status";
 import { theme } from "./src/styles/theme";
 
 export default function App() {
@@ -38,6 +39,18 @@ export default function App() {
 
         <Text style={styles.title}>Button Danger</Text>
         <Button title="Label" variant="danger" icon={DirectionUpRightIcon} />
+
+        <Text style={styles.title}>Status Sent</Text>
+        <Status status="sent" />
+
+        <Text style={styles.title}>Status Draft</Text>
+        <Status status="draft" />
+
+        <Text style={styles.title}>Status Approved</Text>
+        <Status status="approved" />
+
+        <Text style={styles.title}>Status Declined</Text>
+        <Status status="declined" />
       </View>
     </Pressable>
   );

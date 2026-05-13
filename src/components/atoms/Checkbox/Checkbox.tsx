@@ -5,7 +5,7 @@ import {
   View,
 } from "react-native";
 
-import CheckedIcon from "../../assets/icons/check.svg";
+import CheckedIcon from "../../../assets/icons/check.svg";
 
 import { styles } from "./styles";
 

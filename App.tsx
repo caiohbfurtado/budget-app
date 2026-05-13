@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Keyboard, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { StatusBar } from "expo-status-bar";
@@ -9,6 +9,7 @@ import { Lato_700Bold } from "@expo-google-fonts/lato/700Bold";
 import CalendarIcon from "./src/assets/icons/calendar.svg";
 import DirectionUpRightIcon from "./src/assets/icons/direction-up-right.svg";
 import { Button } from "./src/components/Button";
+import { Checkbox } from "./src/components/Checkbox";
 import { Input } from "./src/components/Input";
 import { Status } from "./src/components/Status";
 import { theme } from "./src/styles/theme";
@@ -18,6 +19,7 @@ export default function App() {
     Lato_700Bold,
     Lato_400Regular,
   });
+  const [isChecked, setIsChecked] = useState(false);
 
   if (!fontsLoaded) {
     return null;
@@ -51,6 +53,13 @@ export default function App() {
 
         <Text style={styles.title}>Status Declined</Text>
         <Status status="declined" />
+
+        <Text style={styles.title}>Checkbox</Text>
+        <Checkbox
+          label="Checkbox label"
+          checked={isChecked}
+          onPress={() => setIsChecked((prevState) => !prevState)}
+        />
       </View>
     </Pressable>
   );

@@ -14,7 +14,7 @@ import { styles } from "./styles";
 type Quote = {
   id: string;
   title: string;
-  description: string;
+  client: string;
   value: number;
   status: QuoteStatus;
 };
@@ -23,56 +23,56 @@ const quotes: Quote[] = [
   {
     id: "1",
     title: "Orçamento 1",
-    description: "Descrição do orçamento 1",
+    client: "Cliente 1",
     value: 1000.5,
     status: "draft",
   },
   {
     id: "2",
     title: "Orçamento 2",
-    description: "Descrição do orçamento 2",
+    client: "Cliente 2",
     value: 1500.75,
     status: "approved",
   },
   {
     id: "3",
     title: "Orçamento 3",
-    description: "Descrição do orçamento 3",
+    client: "Cliente 3",
     value: 500.25,
     status: "sent",
   },
   {
     id: "4",
     title: "Orçamento 4",
-    description: "Descrição do orçamento 4",
+    client: "Cliente 4",
     value: 2000,
     status: "declined",
   },
   {
     id: "5",
     title: "Orçamento 5",
-    description: "Descrição do orçamento 5",
+    client: "Cliente 5",
     value: 1200.5,
     status: "draft",
   },
   {
     id: "6",
     title: "Orçamento 6",
-    description: "Descrição do orçamento 6",
+    client: "Cliente 6",
     value: 800.75,
     status: "approved",
   },
   {
     id: "7",
     title: "Orçamento 7",
-    description: "Descrição do orçamento 7",
+    client: "Cliente 7",
     value: 1800.25,
     status: "sent",
   },
   {
     id: "8",
     title: "Orçamento 8",
-    description: "Descrição do orçamento 8",
+    client: "Cliente  8",
     value: 2500,
     status: "declined",
   },
@@ -103,7 +103,7 @@ export function Home() {
           renderItem={({ item }) => (
             <QuoteCard
               title={item.title}
-              description={item.description}
+              client={item.client}
               value={item.value}
               status={item.status}
             />

@@ -11,17 +11,12 @@ import { styles } from "./styles";
 
 type QuoteCardProps = TouchableOpacityProps & {
   title: string;
-  description: string;
+  client: string;
   value: number;
   status: QuoteStatus;
 };
 
-export function QuoteCard({
-  title,
-  description,
-  value,
-  status,
-}: QuoteCardProps) {
+export function QuoteCard({ title, client, value, status }: QuoteCardProps) {
   const formattedValue = value
     .toLocaleString("pt-BR", {
       style: "currency",
@@ -36,8 +31,8 @@ export function QuoteCard({
         <Text style={styles.title} numberOfLines={2}>
           {title}
         </Text>
-        <Text style={styles.description} numberOfLines={2}>
-          {description}
+        <Text style={styles.client} numberOfLines={2}>
+          {client}
         </Text>
       </View>
       <Text style={styles.value}>{formattedValue}</Text>

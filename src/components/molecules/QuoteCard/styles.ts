@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     fontSize: theme.font.fontSize.md,
     color: theme.colors.base.gray[700],
   },
-  description: {
+  client: {
     fontFamily: theme.font.fontFamily.base,
     fontSize: theme.font.fontSize.sm,
     color: theme.colors.base.gray[600],

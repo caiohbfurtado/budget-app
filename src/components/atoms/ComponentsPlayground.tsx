@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Keyboard, Pressable, StyleSheet, Text, View } from "react-native";
 
-import CalendarIcon from "../assets/icons/calendar.svg";
-import DirectionUpRightIcon from "../assets/icons/direction-up-right.svg";
-import { theme } from "../styles/theme";
+import CalendarIcon from "../../assets/icons/calendar.svg";
+import DirectionUpRightIcon from "../../assets/icons/direction-up-right.svg";
+import { theme } from "../../styles/theme";
 
 import { Button } from "./Button";
 import { Checkbox } from "./Checkbox";

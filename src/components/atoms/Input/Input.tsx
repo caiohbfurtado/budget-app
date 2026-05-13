@@ -3,7 +3,7 @@ import { Text, TextInput, TextInputProps, View } from "react-native";
 
 import { SvgProps } from "react-native-svg";
 
-import { theme } from "../../styles/theme";
+import { theme } from "../../../styles/theme";
 
 import { styles } from "./styles";
 

@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -8,77 +9,27 @@ import { Button, Input } from "../../components";
 import { QuoteStatus } from "../../components/atoms/Status/Status";
 import { MainHeader } from "../../components/molecules/MainHeader";
 import { QuoteCard } from "../../components/molecules/QuoteCard";
+import { Quote, quotes } from "../../seeds/quotes";
 
 import { styles } from "./styles";
 
-type Quote = {
-  id: string;
-  title: string;
-  client: string;
-  value: number;
-  status: QuoteStatus;
-};
-
-const quotes: Quote[] = [
-  {
-    id: "1",
-    title: "Orçamento 1",
-    client: "Cliente 1",
-    value: 1000.5,
-    status: "draft",
-  },
-  {
-    id: "2",
-    title: "Orçamento 2",
-    client: "Cliente 2",
-    value: 1500.75,
-    status: "approved",
-  },
-  {
-    id: "3",
-    title: "Orçamento 3",
-    client: "Cliente 3",
-    value: 500.25,
-    status: "sent",
-  },
-  {
-    id: "4",
-    title: "Orçamento 4",
-    client: "Cliente 4",
-    value: 2000,
-    status: "declined",
-  },
-  {
-    id: "5",
-    title: "Orçamento 5",
-    client: "Cliente 5",
-    value: 1200.5,
-    status: "draft",
-  },
-  {
-    id: "6",
-    title: "Orçamento 6",
-    client: "Cliente 6",
-    value: 800.75,
-    status: "approved",
-  },
-  {
-    id: "7",
-    title: "Orçamento 7",
-    client: "Cliente 7",
-    value: 1800.25,
-    status: "sent",
-  },
-  {
-    id: "8",
-    title: "Orçamento 8",
-    client: "Cliente  8",
-    value: 2500,
-    status: "declined",
-  },
-];
-
 export function Home() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredQuotes, setFilteredQuotes] = useState<Quote[]>(quotes);
+
+  const handleSearch = useCallback(() => {
+    const filtered = quotes.filter(
+      (quote) =>
+        quote.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        quote.client.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+    setFilteredQuotes(filtered);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchTerm, handleSearch]);
+
   return (
     <SafeAreaView
       style={{
@@ -89,12 +40,17 @@ export function Home() {
 
       <View style={styles.content}>
         <View style={styles.headerContent}>
-          <Input placeholder="Título ou cliente" icon={SearchIcon} />
+          <Input
+            value={searchTerm}
+            onChangeText={setSearchTerm}
+            placeholder="Título ou cliente"
+            icon={SearchIcon}
+          />
           <Button icon={FilterIcon} variant="secondary" />
         </View>
 
         <FlatList
-          data={quotes}
+          data={filteredQuotes}
           contentContainerStyle={{
             gap: 8,
             paddingBottom: 24,

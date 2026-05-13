@@ -6,6 +6,7 @@ import { Lato_700Bold } from "@expo-google-fonts/lato/700Bold";
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { KeyboardDismissView } from "./src/components";
 import { Home } from "./src/screens/Home";
 
 export default function App() {
@@ -20,7 +21,9 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <Home />
+      <KeyboardDismissView>
+        <Home />
+      </KeyboardDismissView>
     </SafeAreaProvider>
   );
 }

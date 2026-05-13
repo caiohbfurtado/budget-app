@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Keyboard, Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import CalendarIcon from "../../assets/icons/calendar.svg";
 import DirectionUpRightIcon from "../../assets/icons/direction-up-right.svg";
@@ -8,6 +8,7 @@ import { theme } from "../../styles/theme";
 import { Button } from "./Button";
 import { Checkbox } from "./Checkbox";
 import { Input } from "./Input";
+import { KeyboardDismissView } from "./KeyboardDismissView";
 import { Radio } from "./Radio";
 import { Status } from "./Status";
 
@@ -16,7 +17,7 @@ export function ComponentsPlayground() {
   const [isCheckedRadio, setIsCheckedRadio] = useState(false);
 
   return (
-    <Pressable style={styles.container} onPress={Keyboard.dismiss}>
+    <KeyboardDismissView style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>Input</Text>
         <Input placeholder="Teste de Input" prefix="R$" icon={CalendarIcon} />
@@ -56,7 +57,7 @@ export function ComponentsPlayground() {
           onPress={() => setIsCheckedRadio((prevState) => !prevState)}
         />
       </View>
-    </Pressable>
+    </KeyboardDismissView>
   );
 }
 

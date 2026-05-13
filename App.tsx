@@ -11,6 +11,11 @@ export default function App() {
     Lato_700Bold,
     Lato_400Regular,
   });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>

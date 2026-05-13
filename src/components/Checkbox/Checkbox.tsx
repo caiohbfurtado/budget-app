@@ -9,14 +9,19 @@ import CheckedIcon from "../../assets/icons/check.svg";
 
 import { styles } from "./styles";
 
-type CheckboxProps = TouchableOpacityProps & {
+type CheckboxProps = {
   label: string;
   checked: boolean;
+  onPress: () => void;
 };
 
-export function Checkbox({ label, checked, ...rest }: CheckboxProps) {
+export function Checkbox({ label, checked, onPress }: CheckboxProps) {
   return (
-    <TouchableOpacity activeOpacity={0.7} style={styles.container} {...rest}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={styles.container}
+      onPress={onPress}
+    >
       <View style={[styles.checkbox, checked && styles.checkboxChecked]}>
         {checked && <CheckedIcon fill="#FFF" width={16} height={16} />}
       </View>

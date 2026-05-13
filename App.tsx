@@ -11,6 +11,7 @@ import DirectionUpRightIcon from "./src/assets/icons/direction-up-right.svg";
 import { Button } from "./src/components/Button";
 import { Checkbox } from "./src/components/Checkbox";
 import { Input } from "./src/components/Input";
+import { Radio } from "./src/components/Radio";
 import { Status } from "./src/components/Status";
 import { theme } from "./src/styles/theme";
 
@@ -19,7 +20,8 @@ export default function App() {
     Lato_700Bold,
     Lato_400Regular,
   });
-  const [isChecked, setIsChecked] = useState(false);
+  const [isCheckedCheckbox, setIsCheckedCheckbox] = useState(false);
+  const [isCheckedRadio, setIsCheckedRadio] = useState(false);
 
   if (!fontsLoaded) {
     return null;
@@ -57,8 +59,15 @@ export default function App() {
         <Text style={styles.title}>Checkbox</Text>
         <Checkbox
           label="Checkbox label"
-          checked={isChecked}
-          onPress={() => setIsChecked((prevState) => !prevState)}
+          checked={isCheckedCheckbox}
+          onPress={() => setIsCheckedCheckbox((prevState) => !prevState)}
+        />
+
+        <Text style={styles.title}>Radio</Text>
+        <Radio
+          label="Radio label"
+          checked={isCheckedRadio}
+          onPress={() => setIsCheckedRadio((prevState) => !prevState)}
         />
       </View>
     </Pressable>

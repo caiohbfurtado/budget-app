@@ -26,7 +26,7 @@ export function Home() {
   const bottomSheetRef = useRef<BottomSheetRef>(null);
   const [bottomSheetIndex, setBottomSheetIndex] = useState(-1);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
-  const [orderFilter, setOrderFilter] = useState<string>("");
+  const [orderFilter, setOrderFilter] = useState<string>("recentlyCreated");
 
   const quotesInDraft = useMemo(() => {
     return quotes.filter((quote) => quote.status === "draft").length;

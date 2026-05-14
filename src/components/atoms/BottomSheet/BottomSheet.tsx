@@ -5,18 +5,15 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
 
 import GorhomBottomSheet, {
-  BottomSheetBackdrop,
   BottomSheetBackdropProps,
   BottomSheetProps as GorhomBottomSheetProps,
   BottomSheetView,
   SNAP_POINT_TYPE,
 } from "@gorhom/bottom-sheet";
 
-import CloseIcon from "../../../assets/icons/multiply.svg";
-
+import { Backdrop, HandleComponent } from "./components";
 import { styles } from "./styles";
 
 type BottomSheetProps = GorhomBottomSheetProps & {
@@ -47,26 +44,17 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
 
     const renderBackdrop = useCallback(
       (backdropProps: BottomSheetBackdropProps) => (
-        <BottomSheetBackdrop
-          {...backdropProps}
-          style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
-          appearsOnIndex={0}
-          disappearsOnIndex={-1}
-          pressBehavior="close"
-        />
+        <Backdrop {...backdropProps} />
       ),
       [],
     );
 
     const renderHandleComponent = useCallback(
       () => (
-        <View style={styles.headerContainer}>
-          <Text style={styles.headerTitle}>{title}</Text>
-
-          <TouchableOpacity onPress={() => bottomSheetRef.current?.close()}>
-            <CloseIcon width={24} height={24} />
-          </TouchableOpacity>
-        </View>
+        <HandleComponent
+          title={title}
+          onClose={() => bottomSheetRef.current?.close()}
+        />
       ),
       [title],
     );

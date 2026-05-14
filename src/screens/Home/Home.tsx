@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -9,13 +9,11 @@ import {
   BottomSheet,
   BottomSheetRef,
   Button,
-  CheckboxGroup,
+  FilterBottomSheet,
   Input,
   MainHeader,
   QuoteCard,
-  Status,
 } from "../../components";
-import { RadioGroup } from "../../components/molecules/RadioGroup/RadioGroup";
 import { Quote, quotes } from "../../seeds/quotes";
 
 import { styles } from "./styles";
@@ -27,10 +25,6 @@ export function Home() {
   const [bottomSheetIndex, setBottomSheetIndex] = useState(-1);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
   const [orderFilter, setOrderFilter] = useState<string>("recentlyCreated");
-
-  const quotesInDraft = useMemo(() => {
-    return quotes.filter((quote) => quote.status === "draft").length;
-  }, []);
 
   const handleSearch = useCallback(() => {
     const filtered = quotes.filter(
@@ -61,6 +55,10 @@ export function Home() {
 
   const handleOpenFilters = useCallback(() => {
     bottomSheetRef.current?.expand();
+  }, []);
+
+  const quotesInDraft = useMemo(() => {
+    return quotes.filter((quote) => quote.status === "draft").length;
   }, []);
 
   return (
@@ -103,6 +101,7 @@ export function Home() {
           )}
         />
       </View>
+
       <BottomSheet
         title="Filtrar e ordenar"
         ref={bottomSheetRef}
@@ -110,61 +109,12 @@ export function Home() {
         onChange={setBottomSheetIndex}
         onClose={() => setBottomSheetIndex(-1)}
       >
-        <View style={styles.bottomsheetContentContainer}>
-          <View style={styles.filterContainer}>
-            <Text style={styles.titleBottomSheet}>Status</Text>
-
-            <CheckboxGroup
-              value={statusFilter}
-              onChange={handlePressStatusFilter}
-              options={[
-                {
-                  value: "draft",
-                  label: <Status status="draft" />,
-                },
-                {
-                  value: "sent",
-                  label: <Status status="sent" />,
-                },
-                {
-                  value: "approved",
-                  label: <Status status="approved" />,
-                },
-                {
-                  value: "declined",
-                  label: <Status status="declined" />,
-                },
-              ]}
-            />
-          </View>
-
-          <View style={styles.filterContainer}>
-            <Text style={styles.titleBottomSheet}>Ordenação</Text>
-
-            <RadioGroup
-              value={orderFilter}
-              onChange={handlePressOrderFilter}
-              options={[
-                {
-                  value: "recentlyCreated",
-                  label: "Mais recente",
-                },
-                {
-                  value: "olderlyCreated",
-                  label: "Mais antigo",
-                },
-                {
-                  value: "higherValue",
-                  label: "Maior valor",
-                },
-                {
-                  value: "lowerValue",
-                  label: "Menor valor",
-                },
-              ]}
-            />
-          </View>
-        </View>
+        <FilterBottomSheet
+          statusFilter={statusFilter}
+          orderFilter={orderFilter}
+          handlePressStatusFilter={handlePressStatusFilter}
+          handlePressOrderFilter={handlePressOrderFilter}
+        />
       </BottomSheet>
     </SafeAreaView>
   );

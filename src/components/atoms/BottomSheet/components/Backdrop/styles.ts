@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  contentContainer: {
+  backdrop: {
     flex: 1,
-    padding: 20,
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
   },
 });

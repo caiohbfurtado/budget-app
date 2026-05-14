@@ -8,12 +8,13 @@ import {
 
 import GorhomBottomSheet, {
   BottomSheetBackdropProps,
+  BottomSheetFooterProps,
   BottomSheetProps as GorhomBottomSheetProps,
   BottomSheetView,
   SNAP_POINT_TYPE,
 } from "@gorhom/bottom-sheet";
 
-import { Backdrop, HandleComponent } from "./components";
+import { Backdrop, Footer, HandleComponent } from "./components";
 import { styles } from "./styles";
 
 type BottomSheetProps = GorhomBottomSheetProps & {
@@ -49,6 +50,11 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
       [],
     );
 
+    const renderFooterComponent = useCallback(
+      (footerProps: BottomSheetFooterProps) => <Footer {...footerProps} />,
+      [],
+    );
+
     const renderHandleComponent = useCallback(
       () => (
         <HandleComponent
@@ -77,11 +83,10 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
         backdropComponent={renderBackdrop}
         enablePanDownToClose
         handleComponent={renderHandleComponent}
+        footerComponent={renderFooterComponent}
         {...props}
       >
-        <BottomSheetView style={styles.contentContainer}>
-          {children}
-        </BottomSheetView>
+        <BottomSheetView style={styles.container}>{children}</BottomSheetView>
       </GorhomBottomSheet>
     );
   },

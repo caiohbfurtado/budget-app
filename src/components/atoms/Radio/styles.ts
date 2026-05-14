@@ -4,7 +4,6 @@ import { theme } from "../../../styles/theme";
 
 export const styles = StyleSheet.create({
   container: {
-    alignSelf: "flex-start",
     flexDirection: "row",
     alignItems: "center",
     gap: 12,

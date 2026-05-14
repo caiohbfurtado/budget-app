@@ -1,28 +1,24 @@
 import { View } from "react-native";
 
-import { Checkbox, CheckboxProps } from "../../atoms/";
+import { Radio, RadioProps } from "../../atoms";
 
 import { styles } from "./styles";
 
-type CheckboxGroupProps = {
-  options: Omit<CheckboxProps, "checked" | "onPress">[];
-  value: string[];
+type RadioGroupProps = {
+  options: Omit<RadioProps, "checked" | "onPress">[];
+  value: string;
   onChange: (value: string) => void;
 };
 
-export function CheckboxGroup({
-  options,
-  value,
-  onChange,
-}: CheckboxGroupProps) {
+export function RadioGroup({ options, value, onChange }: RadioGroupProps) {
   return (
     <View style={styles.container}>
       {options.map((option, index) => (
-        <Checkbox
+        <Radio
           value={option.value}
           key={index.toString()}
           label={option.label}
-          checked={value?.includes(option.value) || false}
+          checked={value === option.value}
           onPress={() => onChange(option.value)}
         />
       ))}

@@ -5,14 +5,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import FilterIcon from "../../assets/icons/filter.svg";
 import SearchIcon from "../../assets/icons/search.svg";
-import { Button, Checkbox, Input, Status } from "../../components";
 import {
   BottomSheet,
   BottomSheetRef,
-} from "../../components/atoms/BottomSheet";
-import { CheckboxGroup } from "../../components/molecules/CheckboxGroup";
-import { MainHeader } from "../../components/molecules/MainHeader";
-import { QuoteCard } from "../../components/molecules/QuoteCard";
+  Button,
+  CheckboxGroup,
+  Input,
+  MainHeader,
+  QuoteCard,
+  Status,
+} from "../../components";
+import { RadioGroup } from "../../components/molecules/RadioGroup/RadioGroup";
 import { Quote, quotes } from "../../seeds/quotes";
 
 import { styles } from "./styles";
@@ -23,6 +26,7 @@ export function Home() {
   const bottomSheetRef = useRef<BottomSheetRef>(null);
   const [bottomSheetIndex, setBottomSheetIndex] = useState(-1);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
+  const [orderFilter, setOrderFilter] = useState<string>("");
 
   const quotesInDraft = useMemo(() => {
     return quotes.filter((quote) => quote.status === "draft").length;
@@ -50,6 +54,10 @@ export function Home() {
       }
     });
   }
+
+  const handlePressOrderFilter = useCallback((order: string) => {
+    setOrderFilter(order);
+  }, []);
 
   const handleOpenFilters = useCallback(() => {
     bottomSheetRef.current?.expand();
@@ -108,26 +116,50 @@ export function Home() {
 
             <CheckboxGroup
               value={statusFilter}
+              onChange={handlePressStatusFilter}
               options={[
                 {
                   value: "draft",
                   label: <Status status="draft" />,
-                  onPress: (value) => handlePressStatusFilter(value),
                 },
                 {
                   value: "sent",
                   label: <Status status="sent" />,
-                  onPress: (value) => handlePressStatusFilter(value),
                 },
                 {
                   value: "approved",
                   label: <Status status="approved" />,
-                  onPress: (value) => handlePressStatusFilter(value),
                 },
                 {
                   value: "declined",
                   label: <Status status="declined" />,
-                  onPress: (value) => handlePressStatusFilter(value),
+                },
+              ]}
+            />
+          </View>
+
+          <View style={styles.filterContainer}>
+            <Text style={styles.titleBottomSheet}>Ordenação</Text>
+
+            <RadioGroup
+              value={orderFilter}
+              onChange={handlePressOrderFilter}
+              options={[
+                {
+                  value: "recentlyCreated",
+                  label: "Mais recente",
+                },
+                {
+                  value: "olderlyCreated",
+                  label: "Mais antigo",
+                },
+                {
+                  value: "higherValue",
+                  label: "Maior valor",
+                },
+                {
+                  value: "lowerValue",
+                  label: "Menor valor",
                 },
               ]}
             />

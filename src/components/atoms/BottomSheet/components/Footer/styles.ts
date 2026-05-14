@@ -10,5 +10,7 @@ export const styles = StyleSheet.create({
     paddingTop: 20,
     borderTopWidth: 1,
     borderTopColor: theme.colors.base.gray[200],
+    backgroundColor: theme.colors.base.white,
+    paddingBottom: 24,
   },
 });

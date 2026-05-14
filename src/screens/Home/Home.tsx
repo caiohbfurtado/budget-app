@@ -99,6 +99,7 @@ export function Home() {
               status={item.status}
             />
           )}
+          showsVerticalScrollIndicator={false}
         />
       </View>
 

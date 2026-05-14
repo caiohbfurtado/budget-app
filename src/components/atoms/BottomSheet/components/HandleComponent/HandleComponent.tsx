@@ -14,7 +14,7 @@ export function HandleComponent({ title, onClose }: HandleComponentProps) {
     <View style={styles.headerContainer}>
       <Text style={styles.headerTitle}>{title}</Text>
 
-      <TouchableOpacity onPress={onClose}>
+      <TouchableOpacity onPress={onClose} hitSlop={8}>
         <CloseIcon width={24} height={24} />
       </TouchableOpacity>
     </View>

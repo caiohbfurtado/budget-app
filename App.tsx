@@ -4,6 +4,7 @@ import { useFonts } from "@expo-google-fonts/lato";
 import { Lato_400Regular } from "@expo-google-fonts/lato/400Regular";
 import { Lato_700Bold } from "@expo-google-fonts/lato/700Bold";
 
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { KeyboardDismissView } from "./src/components";
@@ -20,10 +21,12 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider>
-      <KeyboardDismissView>
-        <Home />
-      </KeyboardDismissView>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <KeyboardDismissView>
+          <Home />
+        </KeyboardDismissView>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }

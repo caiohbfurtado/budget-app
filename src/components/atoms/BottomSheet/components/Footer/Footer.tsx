@@ -12,11 +12,7 @@ import { styles } from "./styles";
 
 export function Footer(footerProps: BottomSheetFooterProps) {
   return (
-    <BottomSheetFooter
-      {...footerProps}
-      // bottomInset={24}
-      style={styles.container}
-    >
+    <BottomSheetFooter {...footerProps} style={styles.container}>
       <Button variant="secondary" title="Resetar filtros" />
       <Button icon={CheckIcon} title="Aplicar" />
     </BottomSheetFooter>

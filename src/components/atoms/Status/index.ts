@@ -1,1 +1,1 @@
-export { Status } from "./Status";
+export { QuoteStatus, Status } from "./Status";

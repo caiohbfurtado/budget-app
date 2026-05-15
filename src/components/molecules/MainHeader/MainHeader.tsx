@@ -7,9 +7,13 @@ import { styles } from "./styles";
 
 type HeaderProps = {
   quotesInDraft: number;
+  onNewQuotePress: () => void;
 };
 
-export function MainHeader({ quotesInDraft = 0 }: HeaderProps) {
+export function MainHeader({
+  quotesInDraft = 0,
+  onNewQuotePress,
+}: HeaderProps) {
   return (
     <View style={styles.container}>
       <View style={styles.containerInfo}>
@@ -21,11 +25,7 @@ export function MainHeader({ quotesInDraft = 0 }: HeaderProps) {
         )}
       </View>
 
-      <Button
-        title="Novo"
-        onPress={() => console.log("Button pressed")}
-        icon={PlusIcon}
-      />
+      <Button title="Novo" onPress={onNewQuotePress} icon={PlusIcon} />
     </View>
   );
 }

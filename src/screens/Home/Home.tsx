@@ -14,14 +14,16 @@ import {
   MainHeader,
   QuoteCard,
 } from "../../components";
+import { StackRoutesProps } from "../../routes/StackRoutes";
 import { Quote, quotes } from "../../seeds/quotes";
 
 import { styles } from "./styles";
 
-export function Home() {
+export function Home({ navigation }: StackRoutesProps<"Home">) {
+  const bottomSheetRef = useRef<BottomSheetRef>(null);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredQuotes, setFilteredQuotes] = useState<Quote[]>(quotes);
-  const bottomSheetRef = useRef<BottomSheetRef>(null);
   const [bottomSheetIndex, setBottomSheetIndex] = useState(-1);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
   const [orderFilter, setOrderFilter] = useState<string>("recentlyCreated");
@@ -67,7 +69,10 @@ export function Home() {
         flex: 1,
       }}
     >
-      <MainHeader quotesInDraft={quotesInDraft} />
+      <MainHeader
+        quotesInDraft={quotesInDraft}
+        onNewQuotePress={() => navigation.navigate("NewQuote")}
+      />
 
       <View style={styles.content}>
         <View style={styles.headerContent}>

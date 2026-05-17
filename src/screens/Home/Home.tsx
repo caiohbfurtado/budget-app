@@ -3,6 +3,7 @@ import { FlatList, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import CheckIcon from "../../assets/icons/check.svg";
 import FilterIcon from "../../assets/icons/filter.svg";
 import SearchIcon from "../../assets/icons/search.svg";
 import {
@@ -64,6 +65,15 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
     return quotes.filter((quote) => quote.status === "draft").length;
   }, []);
 
+  const renderFooter = useCallback(() => {
+    return (
+      <>
+        <Button variant="secondary" title="Resetar filtros" />
+        <Button icon={CheckIcon} title="Aplicar" />
+      </>
+    );
+  }, []);
+
   return (
     <SafeAreaView
       style={{
@@ -116,6 +126,7 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
         index={bottomSheetIndex}
         onChange={setBottomSheetIndex}
         onClose={() => setBottomSheetIndex(-1)}
+        footer={renderFooter()}
       >
         <FilterBottomSheet
           statusFilter={statusFilter}

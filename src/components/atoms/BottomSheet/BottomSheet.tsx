@@ -19,12 +19,16 @@ import { styles } from "./styles";
 
 type BottomSheetProps = GorhomBottomSheetProps & {
   title: string;
+  footer?: React.ReactNode;
 };
 
 export type BottomSheetRef = ComponentRef<typeof GorhomBottomSheet>;
 
 export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
-  ({ children, snapPoints, onChange, onClose, title, ...props }, ref) => {
+  (
+    { children, snapPoints, onChange, onClose, title, footer, ...props },
+    ref,
+  ) => {
     const bottomSheetRef = useRef<BottomSheetRef>(null);
 
     const handleBottomSheetRef = useCallback(
@@ -51,8 +55,9 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
     );
 
     const renderFooterComponent = useCallback(
-      (footerProps: BottomSheetFooterProps) => <Footer {...footerProps} />,
-      [],
+      (footerProps: BottomSheetFooterProps) =>
+        footer ? <Footer {...footerProps}>{footer}</Footer> : null,
+      [footer],
     );
 
     const renderHandleComponent = useCallback(

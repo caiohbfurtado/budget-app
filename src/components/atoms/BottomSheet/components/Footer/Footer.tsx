@@ -1,20 +1,18 @@
-import { View } from "react-native";
-
 import {
   BottomSheetFooter,
   BottomSheetFooterProps,
 } from "@gorhom/bottom-sheet";
 
-import CheckIcon from "../../../../../assets/icons/check.svg";
-import { Button } from "../../../../";
-
 import { styles } from "./styles";
 
-export function Footer(footerProps: BottomSheetFooterProps) {
+type FooterProps = BottomSheetFooterProps & {
+  children?: React.ReactNode;
+};
+
+export function Footer({ children, ...rest }: FooterProps) {
   return (
-    <BottomSheetFooter {...footerProps} style={styles.container}>
-      <Button variant="secondary" title="Resetar filtros" />
-      <Button icon={CheckIcon} title="Aplicar" />
+    <BottomSheetFooter {...rest} style={styles.container}>
+      {children}
     </BottomSheetFooter>
   );
 }

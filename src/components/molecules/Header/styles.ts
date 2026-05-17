@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 20,
     borderBottomWidth: 1,
-    borderBottomColor: theme.colors.base.gray[200],
+    borderBottomColor: theme.colors.base.gray[300],
   },
   titleContainer: {
     flexDirection: "row",

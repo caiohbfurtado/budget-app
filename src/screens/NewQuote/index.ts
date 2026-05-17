@@ -1,1 +1,0 @@
-export { NewQuote } from "./NewQuote";

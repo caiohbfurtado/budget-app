@@ -3,11 +3,11 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 
-import { Home, NewQuote } from "../screens";
+import { Home, ManageQuote } from "../screens";
 
 export type StackRoutesList = {
   Home: undefined;
-  NewQuote: undefined;
+  ManageQuote: undefined;
 };
 
 export type StackRoutesProps<T extends keyof StackRoutesList> =
@@ -22,7 +22,7 @@ export function StackRoutes() {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="NewQuote" component={NewQuote} />
+      <Stack.Screen name="ManageQuote" component={ManageQuote} />
     </Stack.Navigator>
   );
 }

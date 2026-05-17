@@ -71,7 +71,7 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
     >
       <MainHeader
         quotesInDraft={quotesInDraft}
-        onNewQuotePress={() => navigation.navigate("NewQuote")}
+        onNewQuotePress={() => navigation.navigate("ManageQuote")}
       />
 
       <View style={styles.content}>

@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   container: {
     minHeight: 48,
     maxHeight: 48,
-    flex: 1,
+    width: "100%",
     borderRadius: 9999,
     backgroundColor: theme.colors.base.gray[100],
     paddingHorizontal: 16,
@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    height: "100%",
     minWidth: 0,
     fontFamily: theme.font.fontFamily.base,
     color: theme.colors.base.gray[700],

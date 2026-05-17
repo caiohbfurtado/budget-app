@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Text, TextInput, TextInputProps, View } from "react-native";
+import {
+  StyleProp,
+  Text,
+  TextInput,
+  TextInputProps,
+  View,
+  ViewStyle,
+} from "react-native";
 
 import { SvgProps } from "react-native-svg";
 
@@ -11,9 +18,16 @@ type InputProps = TextInputProps & {
   icon?: React.ComponentType<SvgProps>;
   prefix?: string;
   isErrored?: boolean;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
-export function Input({ icon: Icon, prefix, isErrored, ...rest }: InputProps) {
+export function Input({
+  icon: Icon,
+  prefix,
+  isErrored,
+  containerStyle,
+  ...rest
+}: InputProps) {
   const [isFocused, setIsFocused] = useState(false);
   const { onFocus, onBlur } = rest;
 
@@ -21,6 +35,7 @@ export function Input({ icon: Icon, prefix, isErrored, ...rest }: InputProps) {
     <View
       style={[
         styles.container,
+        containerStyle,
         isErrored && { borderColor: theme.colors.feedback.danger.base },
         isFocused && { borderColor: theme.colors.principal.base },
       ]}

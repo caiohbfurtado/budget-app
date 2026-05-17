@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
   },
   containerPrimary: {
     backgroundColor: theme.colors.principal.base,

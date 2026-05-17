@@ -8,12 +8,14 @@ type ButtonProps = TouchableOpacityProps & {
   title?: string;
   icon?: React.ComponentType<SvgProps>;
   variant?: "primary" | "secondary" | "danger";
+  fullWidth?: boolean;
 };
 
 export function Button({
   title,
   icon: Icon,
   variant = "primary",
+  fullWidth = false,
   ...rest
 }: ButtonProps) {
   const variantStyles = {
@@ -37,7 +39,11 @@ export function Button({
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      style={[styles.container, variantStyles[variant]]}
+      style={[
+        styles.container,
+        variantStyles[variant],
+        fullWidth && { alignSelf: "stretch" },
+      ]}
       {...rest}
     >
       {Icon && <Icon width={24} height={24} fill={iconVariantColor[variant]} />}

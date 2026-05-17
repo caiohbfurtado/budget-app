@@ -81,6 +81,7 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
             onChangeText={setSearchTerm}
             placeholder="Título ou cliente"
             icon={SearchIcon}
+            containerStyle={{ flex: 1 }}
           />
           <Button
             icon={FilterIcon}

@@ -1,15 +1,18 @@
 import { Text, TouchableOpacity, View } from "react-native";
 
+import { Status } from "../Status";
+
 import { styles } from "./styles";
 
 export type RadioProps = {
-  label: string;
+  label: string | React.ReactElement<typeof Status>;
   value: string;
   checked: boolean;
   onPress: (value: string) => void;
 };
 
 export function Radio({ label, checked, onPress, value }: RadioProps) {
+  const isLabelString = typeof label === "string";
   return (
     <TouchableOpacity
       activeOpacity={0.7}
@@ -20,7 +23,7 @@ export function Radio({ label, checked, onPress, value }: RadioProps) {
         {checked && <View style={styles.radioIcon} />}
       </View>
 
-      <Text style={styles.radioLabel}>{label}</Text>
+      {isLabelString ? <Text style={styles.radioLabel}>{label}</Text> : label}
     </TouchableOpacity>
   );
 }

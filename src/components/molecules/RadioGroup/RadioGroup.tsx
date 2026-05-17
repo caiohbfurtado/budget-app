@@ -4,13 +4,17 @@ import { Radio, RadioProps } from "../../atoms";
 
 import { styles } from "./styles";
 
-type RadioGroupProps = {
-  options: Omit<RadioProps, "checked" | "onPress">[];
-  value: string;
-  onChange: (value: string) => void;
+type RadioGroupProps<T extends string = string> = {
+  options: Omit<RadioProps<T>, "checked" | "onPress">[];
+  value: T;
+  onChange: (value: T) => void;
 };
 
-export function RadioGroup({ options, value, onChange }: RadioGroupProps) {
+export function RadioGroup<T extends string>({
+  options,
+  value,
+  onChange,
+}: RadioGroupProps<T>) {
   return (
     <View style={styles.container}>
       {options.map((option, index) => (

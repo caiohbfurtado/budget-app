@@ -13,8 +13,8 @@ import { Radio } from "./Radio";
 import { Status } from "./Status";
 
 export function ComponentsPlayground() {
-  const [isCheckedCheckbox, setIsCheckedCheckbox] = useState(false);
-  const [isCheckedRadio, setIsCheckedRadio] = useState(false);
+  const [selectedCheckbox, setSelectedCheckbox] = useState("checkbox-label");
+  const [selectedRadio, setSelectedRadio] = useState("radio-label");
 
   return (
     <KeyboardDismissView style={styles.container}>
@@ -46,15 +46,17 @@ export function ComponentsPlayground() {
         <Text style={styles.title}>Checkbox</Text>
         <Checkbox
           label="Checkbox label"
-          checked={isCheckedCheckbox}
-          onPress={() => setIsCheckedCheckbox((prevState) => !prevState)}
+          value="checkbox-label"
+          checked={selectedCheckbox === "checkbox-label"}
+          onPress={setSelectedCheckbox}
         />
 
         <Text style={styles.title}>Radio</Text>
         <Radio
           label="Radio label"
-          checked={isCheckedRadio}
-          onPress={() => setIsCheckedRadio((prevState) => !prevState)}
+          value="radio-label"
+          checked={selectedRadio === "radio-label"}
+          onPress={setSelectedRadio}
         />
       </View>
     </KeyboardDismissView>

@@ -4,14 +4,19 @@ import { Status } from "../Status";
 
 import { styles } from "./styles";
 
-export type RadioProps = {
+export type RadioProps<T extends string = string> = {
   label: string | React.ReactElement<typeof Status>;
-  value: string;
+  value: T;
   checked: boolean;
-  onPress: (value: string) => void;
+  onPress: (value: T) => void;
 };
 
-export function Radio({ label, checked, onPress, value }: RadioProps) {
+export function Radio<T extends string>({
+  label,
+  checked,
+  onPress,
+  value,
+}: RadioProps<T>) {
   const isLabelString = typeof label === "string";
   return (
     <TouchableOpacity

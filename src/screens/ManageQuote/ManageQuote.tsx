@@ -1,10 +1,11 @@
-import { ScrollView, View } from "react-native";
+import { ScrollView } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { Header, QuoteSection } from "../../components";
+import { Header } from "../../components";
 import { StackRoutesProps } from "../../routes";
 
+import { GeneralInfo } from "./components";
 import { styles } from "./styles";
 
 export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
@@ -20,7 +21,7 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}
       >
-        <QuoteSection title="Informações gerais" />
+        <GeneralInfo />
       </ScrollView>
     </SafeAreaView>
   );

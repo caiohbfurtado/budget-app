@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View } from "react-native";
 
 import ShopIcon from "../../../../assets/icons/shop.svg";
@@ -6,15 +5,32 @@ import { Input, QuoteSection } from "../../../../components";
 
 import { styles } from "./styles";
 
-export function GeneralInfo() {
-  const [title, setTitle] = useState("");
-  const [client, setClient] = useState("");
+type GeneralInfoProps = {
+  title: string;
+  onChangeTitle: (title: string) => void;
+  client: string;
+  onChangeClient: (client: string) => void;
+};
 
+export function GeneralInfo({
+  title,
+  onChangeTitle,
+  client,
+  onChangeClient,
+}: GeneralInfoProps) {
   const renderBody = () => {
     return (
       <View style={styles.container}>
-        <Input placeholder="Título" value={title} onChangeText={setTitle} />
-        <Input placeholder="Cliente" value={client} onChangeText={setClient} />
+        <Input
+          placeholder="Título"
+          value={title}
+          onChangeText={onChangeTitle}
+        />
+        <Input
+          placeholder="Cliente"
+          value={client}
+          onChangeText={onChangeClient}
+        />
       </View>
     );
   };

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View } from "react-native";
 
 import TagIcon from "../../../../assets/icons/tag.svg";
@@ -11,9 +10,12 @@ import {
 
 import { styles } from "./styles";
 
-export function StatusInfo() {
-  const [status, setStatus] = useState<QuoteStatus>("approved");
+type StatusInfoProps = {
+  status: QuoteStatus;
+  onChangeStatus: (status: QuoteStatus) => void;
+};
 
+export function StatusInfo({ status, onChangeStatus }: StatusInfoProps) {
   const renderBody = () => {
     return (
       <View style={styles.container}>
@@ -22,13 +24,13 @@ export function StatusInfo() {
             label={<Status status="approved" />}
             value="approved"
             checked={status === "approved"}
-            onPress={setStatus}
+            onPress={onChangeStatus}
           />
           <Radio
             label={<Status status="sent" />}
             value="sent"
             checked={status === "sent"}
-            onPress={setStatus}
+            onPress={onChangeStatus}
           />
         </View>
 
@@ -37,13 +39,13 @@ export function StatusInfo() {
             label={<Status status="draft" />}
             value="draft"
             checked={status === "draft"}
-            onPress={setStatus}
+            onPress={onChangeStatus}
           />
           <Radio
             label={<Status status="declined" />}
             value="declined"
             checked={status === "declined"}
-            onPress={setStatus}
+            onPress={onChangeStatus}
           />
         </View>
       </View>

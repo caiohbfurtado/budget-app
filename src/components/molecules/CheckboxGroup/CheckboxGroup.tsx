@@ -4,17 +4,17 @@ import { Checkbox, CheckboxProps } from "../../atoms/";
 
 import { styles } from "./styles";
 
-type CheckboxGroupProps = {
-  options: Omit<CheckboxProps, "checked" | "onPress">[];
-  value: string[];
-  onChange: (value: string) => void;
+type CheckboxGroupProps<T extends string = string> = {
+  options: Omit<CheckboxProps<T>, "checked" | "onPress">[];
+  value: T[];
+  onChange: (value: T) => void;
 };
 
-export function CheckboxGroup({
+export function CheckboxGroup<T extends string>({
   options,
   value,
   onChange,
-}: CheckboxGroupProps) {
+}: CheckboxGroupProps<T>) {
   return (
     <View style={styles.container}>
       {options.map((option, index) => (

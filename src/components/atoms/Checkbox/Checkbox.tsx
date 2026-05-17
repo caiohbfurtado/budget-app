@@ -5,14 +5,19 @@ import { Status } from "../..";
 
 import { styles } from "./styles";
 
-export type CheckboxProps = {
+export type CheckboxProps<T extends string = string> = {
   label: string | React.ReactElement<typeof Status>;
   checked: boolean;
-  onPress: (value: string) => void;
-  value: string;
+  onPress: (value: T) => void;
+  value: T;
 };
 
-export function Checkbox({ label, checked, onPress, value }: CheckboxProps) {
+export function Checkbox<T extends string>({
+  label,
+  checked,
+  onPress,
+  value,
+}: CheckboxProps<T>) {
   const isLabelString = typeof label === "string";
   return (
     <TouchableOpacity

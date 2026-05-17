@@ -13,6 +13,7 @@ import {
   Input,
   MainHeader,
   QuoteCard,
+  QuoteStatus,
 } from "../../components";
 import { StackRoutesProps } from "../../routes/StackRoutes";
 import { Quote, quotes } from "../../seeds/quotes";
@@ -25,7 +26,7 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredQuotes, setFilteredQuotes] = useState<Quote[]>(quotes);
   const [bottomSheetIndex, setBottomSheetIndex] = useState(-1);
-  const [statusFilter, setStatusFilter] = useState<string[]>([]);
+  const [statusFilter, setStatusFilter] = useState<QuoteStatus[]>([]);
   const [orderFilter, setOrderFilter] = useState<string>("recentlyCreated");
 
   const handleSearch = useCallback(() => {
@@ -41,7 +42,7 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
     handleSearch();
   }, [searchTerm, handleSearch]);
 
-  function handlePressStatusFilter(status: string) {
+  function handlePressStatusFilter(status: QuoteStatus) {
     setStatusFilter((prev) => {
       if (prev.includes(status)) {
         return prev.filter((s) => s !== status);

@@ -1,13 +1,13 @@
 import { Text, View } from "react-native";
 
-import { CheckboxGroup, RadioGroup, Status } from "../../";
+import { CheckboxGroup, QuoteStatus, RadioGroup, Status } from "../../";
 
 import { styles } from "./styles";
 
 type FilterBottomSheetProps = {
-  statusFilter: string[];
+  statusFilter: QuoteStatus[];
   orderFilter: string;
-  handlePressStatusFilter: (status: string) => void;
+  handlePressStatusFilter: (status: QuoteStatus) => void;
   handlePressOrderFilter: (order: string) => void;
 };
 

@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "../../components";
 import { StackRoutesProps } from "../../routes";
 
-import { GeneralInfo, StatusInfo } from "./components";
+import { GeneralInfo, ServicesIncludedInfo, StatusInfo } from "./components";
 import { styles } from "./styles";
 
 export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
@@ -23,6 +23,7 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
       >
         <GeneralInfo />
         <StatusInfo />
+        <ServicesIncludedInfo />
       </ScrollView>
     </SafeAreaView>
   );

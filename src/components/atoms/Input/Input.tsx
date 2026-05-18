@@ -17,6 +17,7 @@ import { styles } from "./styles";
 type InputProps = TextInputProps & {
   icon?: React.ComponentType<SvgProps>;
   prefix?: string;
+  sufix?: string;
   isErrored?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
 };
@@ -26,10 +27,11 @@ export function Input({
   prefix,
   isErrored,
   containerStyle,
+  sufix,
   ...rest
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false);
-  const { onFocus, onBlur } = rest;
+  const { onFocus, onBlur, style, ...textInputProps } = rest;
 
   return (
     <View
@@ -63,7 +65,7 @@ export function Input({
       )}
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, style]}
         placeholderTextColor={theme.colors.base.gray[500]}
         cursorColor={theme.colors.principal.base}
         selectionColor={theme.colors.principal.base}
@@ -75,8 +77,20 @@ export function Input({
           setIsFocused(false);
           onBlur?.(event);
         }}
-        {...rest}
+        {...textInputProps}
       />
+
+      {sufix && (
+        <Text
+          style={[
+            styles.prefix,
+            isErrored && { borderColor: theme.colors.feedback.danger.base },
+            isFocused && { color: theme.colors.principal.base },
+          ]}
+        >
+          {sufix}
+        </Text>
+      )}
     </View>
   );
 }

@@ -107,6 +107,8 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
             gap: 8,
             paddingBottom: 24,
           }}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <QuoteCard

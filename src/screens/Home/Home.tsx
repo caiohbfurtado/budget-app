@@ -15,17 +15,18 @@ import {
   QuoteCard,
   QuoteStatus,
 } from "../../components";
+import { useQuotes } from "../../hooks/useQuotes";
 import { StackRoutesProps } from "../../routes/StackRoutes";
-import { QuoteProps, quotes } from "../../seeds/quotes";
+import { QuoteProps } from "../../seeds/quotes";
 
 import { FilterBottomSheet, OrderFilter } from "./components";
 import { styles } from "./styles";
 
 export function Home({ navigation }: StackRoutesProps<"Home">) {
   const bottomSheetRef = useRef<BottomSheetRef>(null);
-
+  const { quotes } = useQuotes();
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredQuotes, setFilteredQuotes] = useState<QuoteProps[]>(quotes);
+  const [filteredQuotes, setFilteredQuotes] = useState<QuoteProps[]>([]);
   const [bottomSheetIndex, setBottomSheetIndex] = useState(-1);
   const [statusFilter, setStatusFilter] = useState<QuoteStatus[]>([]);
   const [orderFilter, setOrderFilter] =
@@ -55,7 +56,7 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
     }
 
     setFilteredQuotes(filtered);
-  }, [searchTerm, orderFilter]);
+  }, [searchTerm, orderFilter, quotes]);
 
   const handleApplyFilters = useCallback(() => {
     let filtered = quotes;
@@ -80,7 +81,7 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
 
     setFilteredQuotes(filtered);
     handleCloseFilters();
-  }, [orderFilter, statusFilter, handleCloseFilters]);
+  }, [orderFilter, statusFilter, handleCloseFilters, quotes]);
 
   useEffect(() => {
     handleSearch();
@@ -106,7 +107,7 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
 
   const quotesInDraft = useMemo(() => {
     return quotes.filter((quote) => quote.status === "draft").length;
-  }, []);
+  }, [quotes]);
 
   const renderFooter = useCallback(() => {
     return (

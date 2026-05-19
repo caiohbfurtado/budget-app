@@ -1,8 +1,9 @@
 import { useCallback, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 
+import { randomUUID } from "expo-crypto";
+
 import { SafeAreaView } from "react-native-safe-area-context";
-import { v4 as uuid } from "uuid";
 
 import CheckIcon from "../../assets/icons/check.svg";
 import TrashIcon from "../../assets/icons/trash-2.svg";
@@ -15,6 +16,7 @@ import {
   InputNumber,
   QuoteStatus,
 } from "../../components";
+import { useQuotes } from "../../hooks/useQuotes";
 import { StackRoutesProps } from "../../routes";
 
 import {
@@ -34,6 +36,7 @@ export type ServiceProps = {
 };
 
 export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
+  const { addQuote } = useQuotes();
   const bottomSheetRef = useRef<BottomSheetRef>(null);
   const [bottomSheetIndex, setBottomSheetIndex] = useState(-1);
   const [title, setTitle] = useState("");
@@ -68,7 +71,7 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
     setServices((s) => [
       ...s,
       {
-        id: uuid(),
+        id: randomUUID(),
         title: titleService,
         description: descriptionService,
         price: priceService,
@@ -148,6 +151,7 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
 
   function handleAddQuote() {
     const data = {
+      id: randomUUID(),
       title,
       client,
       status,
@@ -156,7 +160,8 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
       createdAt: new Date(),
     };
 
-    console.log(data);
+    addQuote(data);
+    navigation.goBack();
   }
 
   return (

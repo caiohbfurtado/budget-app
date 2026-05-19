@@ -23,7 +23,7 @@ export function ServicesIncludedInfo({
       <View style={styles.container}>
         {services.map((service, index) => (
           <View key={index} style={styles.serviceContainer}>
-            <View style={styles.serviceVerticalContainer}>
+            <View style={[styles.serviceVerticalContainer, { flex: 1 }]}>
               <Text style={styles.serviceTitle}>{service.title}</Text>
               <Text style={styles.serviceDescription} numberOfLines={1}>
                 {service.description}

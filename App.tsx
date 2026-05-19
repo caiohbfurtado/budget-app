@@ -7,6 +7,7 @@ import { Lato_700Bold } from "@expo-google-fonts/lato/700Bold";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { QuotesProvider } from "./src/contexts/QuotesProvider";
 import { Routes } from "./src/routes";
 
 export default function App() {
@@ -22,7 +23,9 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <Routes />
+        <QuotesProvider>
+          <Routes />
+        </QuotesProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

@@ -1,6 +1,16 @@
 import { createContext } from "react";
 
-import { QuoteProps } from "../seeds/quotes";
+import { QuoteStatus } from "../../components";
+import { ServiceProps } from "../../screens/ManageQuote/ManageQuote";
+
+export type QuoteProps = {
+  id: string;
+  title: string;
+  client: string;
+  services: ServiceProps[];
+  status: QuoteStatus;
+  createdAt: Date;
+};
 
 type QuotesContextType = {
   quotes: QuoteProps[];

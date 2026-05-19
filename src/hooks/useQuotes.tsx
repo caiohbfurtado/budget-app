@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { QuotesContext } from "../contexts/QuotesContext";
+import { QuotesContext } from "../contexts";
 
 export function useQuotes() {
   const context = useContext(QuotesContext);

@@ -1,8 +1,6 @@
 import { useState } from "react";
 
-import { QuoteProps } from "../seeds/quotes";
-
-import { QuotesContext } from "./QuotesContext";
+import { QuoteProps, QuotesContext } from "./";
 
 export function QuotesProvider({ children }: { children: React.ReactNode }) {
   const [quotes, setQuotes] = useState<QuoteProps[]>([]);

@@ -7,7 +7,7 @@ import { Lato_700Bold } from "@expo-google-fonts/lato/700Bold";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { QuotesProvider } from "./src/contexts/QuotesProvider";
+import { QuotesProvider } from "./src/contexts";
 import { Routes } from "./src/routes";
 
 export default function App() {

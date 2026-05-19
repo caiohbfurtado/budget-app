@@ -15,9 +15,9 @@ import {
   QuoteCard,
   QuoteStatus,
 } from "../../components";
+import { QuoteProps } from "../../contexts";
 import { useQuotes } from "../../hooks/useQuotes";
 import { StackRoutesProps } from "../../routes/StackRoutes";
-import { QuoteProps } from "../../seeds/quotes";
 
 import { FilterBottomSheet, OrderFilter } from "./components";
 import { styles } from "./styles";

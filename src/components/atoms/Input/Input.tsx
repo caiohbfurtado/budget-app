@@ -69,6 +69,7 @@ export function Input({
         placeholderTextColor={theme.colors.base.gray[500]}
         cursorColor={theme.colors.principal.base}
         selectionColor={theme.colors.principal.base}
+        returnKeyType={textInputProps.returnKeyType ?? "done"}
         onFocus={(event) => {
           setIsFocused(true);
           onFocus?.(event);

@@ -29,5 +29,8 @@ export const styles = StyleSheet.create({
   footerContainer: {
     paddingHorizontal: 20,
     paddingVertical: 16,
+    backgroundColor: theme.colors.base.gray[100],
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.base.gray[200],
   },
 });

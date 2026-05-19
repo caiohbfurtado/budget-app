@@ -4,25 +4,19 @@ import EditIcon from "../../../../assets/icons/edit-pen.svg";
 import ServicesIncludedIcon from "../../../../assets/icons/note-with-text.svg";
 import PlusIcon from "../../../../assets/icons/plus.svg";
 import { Button, QuoteSection } from "../../../../components";
+import { useQuote } from "../../../../hooks/useQuote";
 import { theme } from "../../../../styles/theme";
-import { ServiceProps } from "../../ManageQuote";
 
 import { styles } from "./styles";
 
-type ServicesIncludedInfoProps = {
-  onAddService?: () => void;
-  services: ServiceProps[];
-};
+export function ServicesIncludedInfo() {
+  const { openEditServiceSheet, openNewServiceSheet, quote } = useQuote();
 
-export function ServicesIncludedInfo({
-  onAddService,
-  services,
-}: ServicesIncludedInfoProps) {
   const renderServicesIncluded = () => {
     return (
       <View style={styles.container}>
-        {services.map((service, index) => (
-          <View key={index} style={styles.serviceContainer}>
+        {quote.services.map((service) => (
+          <View key={service.id} style={styles.serviceContainer}>
             <View style={[styles.serviceVerticalContainer, { flex: 1 }]}>
               <Text style={styles.serviceTitle}>{service.title}</Text>
               <Text style={styles.serviceDescription} numberOfLines={1}>
@@ -43,7 +37,7 @@ export function ServicesIncludedInfo({
               <Text style={styles.serviceQuantity}>Qt: {service.quantity}</Text>
             </View>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => openEditServiceSheet(service.id)}>
               <EditIcon
                 width={20}
                 height={20}
@@ -55,7 +49,7 @@ export function ServicesIncludedInfo({
         <Button
           icon={PlusIcon}
           title="Adicionar serviço"
-          onPress={onAddService}
+          onPress={openNewServiceSheet}
           fullWidth
           variant="secondary"
         />

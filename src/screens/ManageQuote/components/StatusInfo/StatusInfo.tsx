@@ -1,21 +1,14 @@
 import { View } from "react-native";
 
 import TagIcon from "../../../../assets/icons/tag.svg";
-import {
-  QuoteSection,
-  QuoteStatus,
-  Radio,
-  Status,
-} from "../../../../components";
+import { QuoteSection, Radio, Status } from "../../../../components";
+import { useQuote } from "../../../../hooks/useQuote";
 
 import { styles } from "./styles";
 
-type StatusInfoProps = {
-  status: QuoteStatus;
-  onChangeStatus: (status: QuoteStatus) => void;
-};
+export function StatusInfo() {
+  const { quote, setStatus } = useQuote();
 
-export function StatusInfo({ status, onChangeStatus }: StatusInfoProps) {
   const renderBody = () => {
     return (
       <View style={styles.container}>
@@ -23,14 +16,14 @@ export function StatusInfo({ status, onChangeStatus }: StatusInfoProps) {
           <Radio
             label={<Status status="approved" />}
             value="approved"
-            checked={status === "approved"}
-            onPress={onChangeStatus}
+            checked={quote.status === "approved"}
+            onPress={setStatus}
           />
           <Radio
             label={<Status status="sent" />}
             value="sent"
-            checked={status === "sent"}
-            onPress={onChangeStatus}
+            checked={quote.status === "sent"}
+            onPress={setStatus}
           />
         </View>
 
@@ -38,14 +31,14 @@ export function StatusInfo({ status, onChangeStatus }: StatusInfoProps) {
           <Radio
             label={<Status status="draft" />}
             value="draft"
-            checked={status === "draft"}
-            onPress={onChangeStatus}
+            checked={quote.status === "draft"}
+            onPress={setStatus}
           />
           <Radio
             label={<Status status="declined" />}
             value="declined"
-            checked={status === "declined"}
-            onPress={onChangeStatus}
+            checked={quote.status === "declined"}
+            onPress={setStatus}
           />
         </View>
       </View>

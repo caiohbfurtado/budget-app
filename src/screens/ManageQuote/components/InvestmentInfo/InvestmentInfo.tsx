@@ -2,36 +2,23 @@ import { Text, View } from "react-native";
 
 import CreditCardIcon from "../../../../assets/icons/credit-card.svg";
 import { Input, QuoteSection } from "../../../../components";
+import { useQuote } from "../../../../hooks/useQuote";
 import { theme } from "../../../../styles/theme";
-import { ServiceProps } from "../../ManageQuote";
 
 import { styles } from "./styles";
 
-type InvestmentInfoProps = {
-  services: ServiceProps[];
-  discount: number;
-  onChangeDiscount: (discount: string) => void;
-};
-
-export function InvestmentInfo({
-  services,
-  discount,
-  onChangeDiscount,
-}: InvestmentInfoProps) {
-  const subtotal = services.reduce((acc, service) => {
-    return acc + service.price * service.quantity;
-  }, 0);
-
-  const discountValue = (subtotal * discount) / 100;
-  const hasDiscount = discountValue > 0;
-  const total = hasDiscount ? subtotal - discountValue : subtotal;
+export function InvestmentInfo() {
+  const { discountValue, hasDiscount, quote, setDiscount, subtotal, total } =
+    useQuote();
 
   const renderInvestmentInfo = () => {
     return (
       <View>
         <View style={styles.line}>
           <Text style={[styles.infoLabel, { flex: 1 }]}>Subtotal</Text>
-          <Text style={styles.quantityLabel}>{services.length} itens</Text>
+          <Text style={styles.quantityLabel}>
+            {quote.services.length} itens
+          </Text>
           <Text style={styles.infoLabel}>
             <Text style={styles.prefixLabel}>R$ </Text>
             {subtotal.toLocaleString("pt-BR", {
@@ -60,8 +47,8 @@ export function InvestmentInfo({
                 keyboardType="numeric"
                 containerStyle={styles.compactInputContainer}
                 style={styles.compactInput}
-                value={discount.toString()}
-                onChangeText={(e) => onChangeDiscount(e)}
+                value={quote.discount.toString()}
+                onChangeText={setDiscount}
               />
             </View>
           </View>

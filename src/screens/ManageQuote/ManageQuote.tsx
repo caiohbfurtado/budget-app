@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 
 import { randomUUID } from "expo-crypto";
@@ -14,8 +14,9 @@ import {
   Header,
   Input,
   InputNumber,
-  QuoteStatus,
 } from "../../components";
+import { QuoteProvider } from "../../contexts";
+import { useQuote } from "../../hooks/useQuote";
 import { useQuotes } from "../../hooks/useQuotes";
 import { StackRoutesProps } from "../../routes";
 
@@ -27,140 +28,37 @@ import {
 } from "./components";
 import { styles } from "./styles";
 
-export type ServiceProps = {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  quantity: number;
-};
-
-export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
+function ManageQuoteContent({ navigation }: StackRoutesProps<"ManageQuote">) {
   const { addQuote } = useQuotes();
+  const {
+    buildQuote,
+    closeServiceSheet,
+    decrementServiceQuantity,
+    incrementServiceQuantity,
+    isServiceSheetOpen,
+    quote,
+    saveService,
+    serviceForm,
+    serviceSheetTitle,
+    serviceSubmitLabel,
+    setServiceDescription,
+    setServicePrice,
+    setServiceTitle,
+  } = useQuote();
   const bottomSheetRef = useRef<BottomSheetRef>(null);
   const [bottomSheetIndex, setBottomSheetIndex] = useState(-1);
-  const [title, setTitle] = useState("");
-  const [client, setClient] = useState("");
-  const [status, setStatus] = useState<QuoteStatus>("approved");
-  const [quantityService, setQuantityService] = useState(1);
-  const [services, setServices] = useState<ServiceProps[]>([]);
-  const [priceService, setPriceService] = useState<undefined | number>(
-    undefined,
-  );
-  const [discount, setDiscount] = useState(0);
-  const [descriptionService, setDescriptionService] = useState("");
-  const [titleService, setTitleService] = useState("");
 
-  const handleOpenServiceInfo = useCallback(() => {
-    bottomSheetRef.current?.expand();
-  }, []);
-
-  const handleCloseServiceInfo = useCallback(() => {
-    setQuantityService(1);
-    setPriceService(undefined);
-    setDescriptionService("");
-    setTitleService("");
-    bottomSheetRef.current?.close();
-  }, []);
-
-  const handleAddService = useCallback(() => {
-    if (!titleService || !descriptionService || !priceService) {
+  useEffect(() => {
+    if (isServiceSheetOpen) {
+      bottomSheetRef.current?.expand();
       return;
     }
 
-    setServices((s) => [
-      ...s,
-      {
-        id: randomUUID(),
-        title: titleService,
-        description: descriptionService,
-        price: priceService,
-        quantity: quantityService,
-      },
-    ]);
-
-    handleCloseServiceInfo();
-  }, [
-    descriptionService,
-    handleCloseServiceInfo,
-    priceService,
-    quantityService,
-    titleService,
-  ]);
-
-  const renderBottomSheetFooter = useCallback(() => {
-    return (
-      <>
-        <Button
-          icon={TrashIcon}
-          variant="danger"
-          onPress={handleCloseServiceInfo}
-        />
-        <Button icon={CheckIcon} title="Salvar" onPress={handleAddService} />
-      </>
-    );
-  }, [handleAddService, handleCloseServiceInfo]);
-
-  const renderBottomSheetContent = useCallback(() => {
-    return (
-      <View>
-        <View style={{ gap: 12 }}>
-          <Input
-            placeholder="Título"
-            value={titleService}
-            onChangeText={setTitleService}
-          />
-          <Input
-            placeholder="Descrição"
-            multiline
-            textAlignVertical="top"
-            containerStyle={{
-              height: 120,
-              maxHeight: 120,
-              borderRadius: 20,
-              paddingTop: 12,
-            }}
-            style={{
-              minHeight: "100%",
-              width: "100%",
-            }}
-            value={descriptionService}
-            onChangeText={setDescriptionService}
-          />
-          <View
-            style={{ flexDirection: "row", gap: 12, flex: 2, width: "100%" }}
-          >
-            <Input
-              prefix="R$"
-              placeholder="Valor"
-              containerStyle={{ flex: 1 }}
-              keyboardType="numeric"
-              value={priceService ? priceService.toString() : ""}
-              onChangeText={(e) => setPriceService(Number(e))}
-            />
-            <InputNumber
-              value={quantityService}
-              onAdd={() => setQuantityService((q) => q + 1)}
-              onSubtract={() => setQuantityService((q) => Math.max(1, q - 1))}
-            />
-          </View>
-        </View>
-      </View>
-    );
-  }, [titleService, descriptionService, priceService, quantityService]);
+    bottomSheetRef.current?.close();
+  }, [isServiceSheetOpen]);
 
   function handleAddQuote() {
-    const data = {
-      id: randomUUID(),
-      title,
-      client,
-      status,
-      services,
-      discount,
-      createdAt: new Date(),
-    };
-
-    addQuote(data);
+    addQuote(buildQuote(randomUUID()));
     navigation.goBack();
   }
 
@@ -179,25 +77,13 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
         keyboardDismissMode="on-drag"
       >
         <View style={styles.container}>
-          <GeneralInfo
-            title={title}
-            onChangeTitle={setTitle}
-            client={client}
-            onChangeClient={setClient}
-          />
+          <GeneralInfo />
 
-          <StatusInfo status={status} onChangeStatus={setStatus} />
+          <StatusInfo />
 
-          <ServicesIncludedInfo
-            onAddService={handleOpenServiceInfo}
-            services={services}
-          />
+          <ServicesIncludedInfo />
 
-          <InvestmentInfo
-            services={services}
-            discount={discount}
-            onChangeDiscount={(e) => setDiscount(Number(e))}
-          />
+          <InvestmentInfo />
         </View>
       </ScrollView>
 
@@ -207,20 +93,88 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
           variant="secondary"
           onPress={() => navigation.goBack()}
         />
-        <Button title="Salvar" icon={CheckIcon} onPress={handleAddQuote} />
+        <Button
+          title="Salvar"
+          icon={CheckIcon}
+          onPress={handleAddQuote}
+          disabled={!quote.title.trim() || !quote.client.trim()}
+        />
       </View>
 
       <BottomSheet
-        title="Serviço"
+        title={serviceSheetTitle}
         ref={bottomSheetRef}
         index={bottomSheetIndex}
         onChange={setBottomSheetIndex}
-        onClose={handleCloseServiceInfo}
-        footer={renderBottomSheetFooter()}
+        onClose={closeServiceSheet}
+        footer={
+          <>
+            <Button
+              icon={TrashIcon}
+              variant="danger"
+              onPress={closeServiceSheet}
+            />
+            <Button
+              icon={CheckIcon}
+              title={serviceSubmitLabel}
+              onPress={saveService}
+            />
+          </>
+        }
         snapPoints={["60%"]}
       >
-        {renderBottomSheetContent()}
+        <View>
+          <View style={{ gap: 12 }}>
+            <Input
+              placeholder="Título"
+              value={serviceForm.title}
+              onChangeText={setServiceTitle}
+            />
+            <Input
+              placeholder="Descrição"
+              multiline
+              textAlignVertical="top"
+              containerStyle={{
+                height: 120,
+                maxHeight: 120,
+                borderRadius: 20,
+                paddingTop: 12,
+              }}
+              style={{
+                minHeight: "100%",
+                width: "100%",
+              }}
+              value={serviceForm.description}
+              onChangeText={setServiceDescription}
+            />
+            <View
+              style={{ flexDirection: "row", gap: 12, flex: 2, width: "100%" }}
+            >
+              <Input
+                prefix="R$"
+                placeholder="Valor"
+                containerStyle={{ flex: 1 }}
+                keyboardType="numeric"
+                value={serviceForm.price?.toString() ?? ""}
+                onChangeText={setServicePrice}
+              />
+              <InputNumber
+                value={serviceForm.quantity}
+                onAdd={incrementServiceQuantity}
+                onSubtract={decrementServiceQuantity}
+              />
+            </View>
+          </View>
+        </View>
       </BottomSheet>
     </SafeAreaView>
+  );
+}
+
+export function ManageQuote(props: StackRoutesProps<"ManageQuote">) {
+  return (
+    <QuoteProvider>
+      <ManageQuoteContent {...props} />
+    </QuoteProvider>
   );
 }

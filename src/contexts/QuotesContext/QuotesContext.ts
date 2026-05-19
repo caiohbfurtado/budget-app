@@ -1,14 +1,22 @@
 import { createContext } from "react";
 
 import { QuoteStatus } from "../../components";
-import { ServiceProps } from "../../screens/ManageQuote/ManageQuote";
+
+export type QuoteServiceProps = {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  quantity: number;
+};
 
 export type QuoteProps = {
   id: string;
   title: string;
   client: string;
-  services: ServiceProps[];
+  services: QuoteServiceProps[];
   status: QuoteStatus;
+  discount: number;
   createdAt: Date;
 };
 
@@ -18,6 +26,4 @@ type QuotesContextType = {
   getQuote: (id: string) => QuoteProps | undefined;
 };
 
-export const QuotesContext = createContext<QuotesContextType>(
-  {} as QuotesContextType,
-);
+export const QuotesContext = createContext<QuotesContextType | null>(null);

@@ -2,34 +2,25 @@ import { View } from "react-native";
 
 import ShopIcon from "../../../../assets/icons/shop.svg";
 import { Input, QuoteSection } from "../../../../components";
+import { useQuote } from "../../../../hooks/useQuote";
 
 import { styles } from "./styles";
 
-type GeneralInfoProps = {
-  title: string;
-  onChangeTitle: (title: string) => void;
-  client: string;
-  onChangeClient: (client: string) => void;
-};
+export function GeneralInfo() {
+  const { quote, setClient, setTitle } = useQuote();
 
-export function GeneralInfo({
-  title,
-  onChangeTitle,
-  client,
-  onChangeClient,
-}: GeneralInfoProps) {
   const renderBody = () => {
     return (
       <View style={styles.container}>
         <Input
           placeholder="Título"
-          value={title}
-          onChangeText={onChangeTitle}
+          value={quote.title}
+          onChangeText={setTitle}
         />
         <Input
           placeholder="Cliente"
-          value={client}
-          onChangeText={onChangeClient}
+          value={quote.client}
+          onChangeText={setClient}
         />
       </View>
     );

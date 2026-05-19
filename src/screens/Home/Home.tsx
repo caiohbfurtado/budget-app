@@ -158,10 +158,13 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
             <QuoteCard
               title={item.title}
               client={item.client}
-              value={item.services.reduce(
-                (total, service) => total + service.price * service.quantity,
-                0,
-              )}
+              value={
+                item.services.reduce(
+                  (total, service) => total + service.price * service.quantity,
+                  0,
+                ) *
+                (1 - item.discount / 100)
+              }
               status={item.status}
             />
           )}

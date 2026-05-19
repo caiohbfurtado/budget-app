@@ -10,40 +10,83 @@ import {
   BottomSheet,
   BottomSheetRef,
   Button,
-  FilterBottomSheet,
   Input,
   MainHeader,
   QuoteCard,
   QuoteStatus,
 } from "../../components";
 import { StackRoutesProps } from "../../routes/StackRoutes";
-import { Quote, quotes } from "../../seeds/quotes";
+import { QuoteProps, quotes } from "../../seeds/quotes";
 
+import { FilterBottomSheet, OrderFilter } from "./components";
 import { styles } from "./styles";
 
 export function Home({ navigation }: StackRoutesProps<"Home">) {
   const bottomSheetRef = useRef<BottomSheetRef>(null);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredQuotes, setFilteredQuotes] = useState<Quote[]>(quotes);
+  const [filteredQuotes, setFilteredQuotes] = useState<QuoteProps[]>(quotes);
   const [bottomSheetIndex, setBottomSheetIndex] = useState(-1);
   const [statusFilter, setStatusFilter] = useState<QuoteStatus[]>([]);
-  const [orderFilter, setOrderFilter] = useState<string>("recentlyCreated");
+  const [orderFilter, setOrderFilter] =
+    useState<OrderFilter>("recentlyCreated");
+
+  const handleCloseFilters = useCallback(() => {
+    bottomSheetRef.current?.close();
+  }, []);
 
   const handleSearch = useCallback(() => {
-    const filtered = quotes.filter(
+    let filtered = quotes.filter(
       (quote) =>
         quote.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         quote.client.toLowerCase().includes(searchTerm.toLowerCase()),
     );
+
+    if (orderFilter === "recentlyCreated") {
+      filtered = filtered.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+      );
+    } else if (orderFilter === "oldestCreated") {
+      filtered = filtered.sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      );
+    }
+
     setFilteredQuotes(filtered);
-  }, [searchTerm]);
+  }, [searchTerm, orderFilter]);
+
+  const handleApplyFilters = useCallback(() => {
+    let filtered = quotes;
+
+    if (statusFilter.length > 0) {
+      filtered = filtered.filter((quote) =>
+        statusFilter.includes(quote.status),
+      );
+    }
+
+    if (orderFilter === "recentlyCreated") {
+      filtered = filtered.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+      );
+    } else if (orderFilter === "oldestCreated") {
+      filtered = filtered.sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      );
+    }
+
+    setFilteredQuotes(filtered);
+    handleCloseFilters();
+  }, [orderFilter, statusFilter, handleCloseFilters]);
 
   useEffect(() => {
     handleSearch();
   }, [searchTerm, handleSearch]);
 
-  function handlePressStatusFilter(status: QuoteStatus) {
+  const handlePressStatusFilter = useCallback((status: QuoteStatus) => {
     setStatusFilter((prev) => {
       if (prev.includes(status)) {
         return prev.filter((s) => s !== status);
@@ -51,9 +94,9 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
         return [...prev, status];
       }
     });
-  }
+  }, []);
 
-  const handlePressOrderFilter = useCallback((order: string) => {
+  const handlePressOrderFilter = useCallback((order: OrderFilter) => {
     setOrderFilter(order);
   }, []);
 
@@ -69,10 +112,10 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
     return (
       <>
         <Button variant="secondary" title="Resetar filtros" />
-        <Button icon={CheckIcon} title="Aplicar" />
+        <Button icon={CheckIcon} title="Aplicar" onPress={handleApplyFilters} />
       </>
     );
-  }, []);
+  }, [handleApplyFilters]);
 
   return (
     <SafeAreaView
@@ -114,7 +157,10 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
             <QuoteCard
               title={item.title}
               client={item.client}
-              value={item.value}
+              value={item.services.reduce(
+                (total, service) => total + service.price * service.quantity,
+                0,
+              )}
               status={item.status}
             />
           )}
@@ -127,7 +173,7 @@ export function Home({ navigation }: StackRoutesProps<"Home">) {
         ref={bottomSheetRef}
         index={bottomSheetIndex}
         onChange={setBottomSheetIndex}
-        onClose={() => setBottomSheetIndex(-1)}
+        onClose={handleCloseFilters}
         footer={renderFooter()}
       >
         <FilterBottomSheet

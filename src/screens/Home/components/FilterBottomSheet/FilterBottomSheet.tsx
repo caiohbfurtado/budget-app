@@ -1,14 +1,25 @@
 import { Text, View } from "react-native";
 
-import { CheckboxGroup, QuoteStatus, RadioGroup, Status } from "../../";
+import {
+  CheckboxGroup,
+  QuoteStatus,
+  RadioGroup,
+  Status,
+} from "../../../../components";
 
 import { styles } from "./styles";
 
+export type OrderFilter =
+  | "recentlyCreated"
+  | "oldestCreated"
+  | "highestValue"
+  | "lowestValue";
+
 type FilterBottomSheetProps = {
   statusFilter: QuoteStatus[];
-  orderFilter: string;
+  orderFilter: OrderFilter;
   handlePressStatusFilter: (status: QuoteStatus) => void;
-  handlePressOrderFilter: (order: string) => void;
+  handlePressOrderFilter: (order: OrderFilter) => void;
 };
 
 export function FilterBottomSheet({
@@ -58,15 +69,15 @@ export function FilterBottomSheet({
               label: "Mais recente",
             },
             {
-              value: "olderlyCreated",
+              value: "oldestCreated",
               label: "Mais antigo",
             },
             {
-              value: "higherValue",
+              value: "highestValue",
               label: "Maior valor",
             },
             {
-              value: "lowerValue",
+              value: "lowestValue",
               label: "Menor valor",
             },
           ]}

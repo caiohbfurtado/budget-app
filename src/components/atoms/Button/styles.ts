@@ -12,6 +12,8 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    minHeight: 48,
+    maxHeight: 48,
   },
   containerPrimary: {
     backgroundColor: theme.colors.principal.base,

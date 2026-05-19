@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
+import { v4 as uuid } from "uuid";
 
 import CheckIcon from "../../assets/icons/check.svg";
 import TrashIcon from "../../assets/icons/trash-2.svg";
@@ -25,6 +26,7 @@ import {
 import { styles } from "./styles";
 
 export type ServiceProps = {
+  id: string;
   title: string;
   description: string;
   price: number;
@@ -42,6 +44,7 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
   const [priceService, setPriceService] = useState<undefined | number>(
     undefined,
   );
+  const [discount, setDiscount] = useState(0);
   const [descriptionService, setDescriptionService] = useState("");
   const [titleService, setTitleService] = useState("");
 
@@ -65,6 +68,7 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
     setServices((s) => [
       ...s,
       {
+        id: uuid(),
         title: titleService,
         description: descriptionService,
         price: priceService,
@@ -81,7 +85,7 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
     titleService,
   ]);
 
-  const renderFooter = useCallback(() => {
+  const renderBottomSheetFooter = useCallback(() => {
     return (
       <>
         <Button
@@ -142,6 +146,19 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
     );
   }, [titleService, descriptionService, priceService, quantityService]);
 
+  function handleAddQuote() {
+    const data = {
+      title,
+      client,
+      status,
+      services,
+      discount,
+      createdAt: new Date(),
+    };
+
+    console.log(data);
+  }
+
   return (
     <SafeAreaView
       style={{
@@ -171,9 +188,22 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
             services={services}
           />
 
-          <InvestmentInfo />
+          <InvestmentInfo
+            services={services}
+            discount={discount}
+            onChangeDiscount={(e) => setDiscount(Number(e))}
+          />
         </View>
       </ScrollView>
+
+      <View style={styles.footer}>
+        <Button
+          title="Cancelar"
+          variant="secondary"
+          onPress={() => navigation.goBack()}
+        />
+        <Button title="Salvar" icon={CheckIcon} onPress={handleAddQuote} />
+      </View>
 
       <BottomSheet
         title="Serviço"
@@ -181,7 +211,7 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
         index={bottomSheetIndex}
         onChange={setBottomSheetIndex}
         onClose={handleCloseServiceInfo}
-        footer={renderFooter()}
+        footer={renderBottomSheetFooter()}
         snapPoints={["60%"]}
       >
         {renderBottomSheetContent()}

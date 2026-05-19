@@ -1,0 +1,1 @@
+export { InvestmentInfo } from "./InvestmentInfo";

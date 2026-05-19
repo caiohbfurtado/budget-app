@@ -16,7 +16,12 @@ import {
 } from "../../components";
 import { StackRoutesProps } from "../../routes";
 
-import { GeneralInfo, ServicesIncludedInfo, StatusInfo } from "./components";
+import {
+  GeneralInfo,
+  InvestmentInfo,
+  ServicesIncludedInfo,
+  StatusInfo,
+} from "./components";
 import { styles } from "./styles";
 
 export type ServiceProps = {
@@ -146,22 +151,28 @@ export function ManageQuote({ navigation }: StackRoutesProps<"ManageQuote">) {
       <Header title="Orçamento" />
 
       <ScrollView
-        contentContainerStyle={styles.container}
+        style={styles.scrollView}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
       >
-        <GeneralInfo
-          title={title}
-          onChangeTitle={setTitle}
-          client={client}
-          onChangeClient={setClient}
-        />
+        <View style={styles.container}>
+          <GeneralInfo
+            title={title}
+            onChangeTitle={setTitle}
+            client={client}
+            onChangeClient={setClient}
+          />
 
-        <StatusInfo status={status} onChangeStatus={setStatus} />
+          <StatusInfo status={status} onChangeStatus={setStatus} />
 
-        <ServicesIncludedInfo
-          onAddService={handleOpenServiceInfo}
-          services={services}
-        />
+          <ServicesIncludedInfo
+            onAddService={handleOpenServiceInfo}
+            services={services}
+          />
+
+          <InvestmentInfo />
+        </View>
       </ScrollView>
 
       <BottomSheet
